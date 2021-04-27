@@ -8,5 +8,9 @@ Feature:  hub form
     When Customer submits a form
     Then Customer receives a list of error messages
 
-
+  Scenario Outline: submitting a form
+    Given Customer is on hub page
+    When Customer completes the form
+    Then Customer submits a form
+     And Customer receives a Thank you message
 

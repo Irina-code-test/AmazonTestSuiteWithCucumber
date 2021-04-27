@@ -22,13 +22,50 @@ public class HubPage extends BasePage {
     public List<WebElement> errorList;
     @FindBy(xpath = "//*[@id=\"431162_425523pi_431162_425523\"]")
     public WebElement firstNameField;
+    @FindBy(xpath = "//*[@id=\"431162_425525pi_431162_425525\"]")
+    public WebElement lastNameField;
+    @FindBy(xpath = "//*[@id=\"431162_425527pi_431162_425527\"]")
+    public WebElement emailField;
+    @FindBy(xpath = "//*[@id=\"431162_425529pi_431162_425529\"]")
+    public WebElement companyField;
+    @FindBy(xpath = "//*[@id=\"431162_425531pi_431162_425531\"]")
+    public WebElement phoneField;
+    @FindBy(xpath = "//*[@id=\"431162_425533pi_431162_425533\"]")
+    public WebElement addressField;
+    @FindBy(xpath = "//*[@id=\"431162_425535pi_431162_425535\"]")
+    public WebElement cityField;
+    @FindBy(xpath = "//*[@id=\"431162_425537pi_431162_425537\"]")
+    public WebElement stateField;
+    @FindBy(xpath = "//*[@id=\"431162_425539pi_431162_425539\"]")
+    public WebElement zipCodeField;
+    @FindBy(xpath = "//*[@id=\"431162_425541pi_431162_425541\"]")
+    public WebElement countryField;
+    @FindBy(xpath = "//*[@id=\"431162_425543pi_431162_425543\"]")
+    public WebElement locationUnderConstructionField;
+    @FindBy(xpath = "//*[@id=\"431162_425547pi_431162_425547\"]")
+    public WebElement openBusinessField;
+    @FindBy(xpath = "//*[@id=\"431162_425549pi_431162_425549\"]")
+    public WebElement numberOfLocationsField;
+    @FindBy(xpath = "//*[@id=\"431162_425551pi_431162_425551\"]")
+    public WebElement franchiseeLocationField;
+    @FindBy(xpath = "//*[@id=\"431162_425553pi_431162_425553\"]")
+    public WebElement parentCompanyField;
+    @FindBy(xpath = "//*[@id=\"431162_428121pi_431162_428121\"]")
+    public WebElement productRequestedField;
+    @FindBy(xpath = "//*[contains(text(),'Thank You')]")
+    public WebElement thankYouMessage;
+
+
 
     public HubPage(WebDriver driver, PageManager pageManager) {
         super(driver, pageManager);
     }
     public void clickSubmitButton(){
-        new WebDriverWait(driver, Duration.ofSeconds(10), Duration.ofSeconds(1)).until(ExpectedConditions.elementToBeClickable(submitButton));
-        submitButton.click();
+        try {
+            submitButton.click();
+        }catch (org.openqa.selenium.ElementClickInterceptedException err) {
+            submitButton.click();
+        }
     }
     public int getNumberOfElementsInTheCart(){
        new WebDriverWait(driver, Duration.ofSeconds(10), Duration.ofSeconds(1)).until(ExpectedConditions.visibilityOfAllElements(errorList));
