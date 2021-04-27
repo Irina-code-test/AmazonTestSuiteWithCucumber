@@ -9,21 +9,15 @@ import org.apache.logging.log4j.Logger;
 public class PropertyManager {
 
     private static final Logger logger = LogManager.getLogger(PropertyManager.class.getSimpleName());
-    //private static PropertyManager instance = null;
     private static final Properties properties = new Properties();
+    private static final String testDataFilesFolder = "testdata/";
 
     public PropertyManager(String testDataFileName){
-        loadProperties(System.getProperty("test.data.folder") + testDataFileName);
+        loadProperties(testDataFilesFolder + testDataFileName);
     }
 
-    /*private String getTestDataFileName(String testDataFileName){
-        return System.getProperty("test.data.file.name") == null ?
-            "default.properties" : System.getProperty("test.data.file.name");
-    }*/
 
     public String getProperty(String propertyName){
-    //    if(instance == null)
-    //        instance = new PropertyManager();
         return properties.getProperty(propertyName);
     }
 

@@ -15,11 +15,11 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class DriverManager {
     private static final Logger log = LogManager.getLogger(DriverManager.class.getSimpleName());
 
-    public WebDriver getDriver(String driverType){
+    public static WebDriver getDriver(String driverType){
         return getDriver(driverType, "LOCAL");
     }
 
-    public WebDriver getDriver(String driverType, String gridMode){
+    public static WebDriver getDriver(String driverType, String gridMode){
 
         WebDriver requestedDriver = null;
         switch (driverType.toUpperCase(Locale.ROOT)) {
@@ -33,34 +33,26 @@ public class DriverManager {
                 requestedDriver = gridMode.toUpperCase(Locale.ROOT).equals("GRID") ?
                     getRemoteDriver(CapabilityManager.getFirefoxOptions()) : getLocalFirefox();
             }
-            case "EDGE" -> {
-                log.info("Edge driver selected");
-                requestedDriver = gridMode.toUpperCase(Locale.ROOT).equals("GRID") ?
-                    getRemoteDriver(CapabilityManager.getEdgeOptions()) : getLocalEdge();
-            }
         }
         return requestedDriver;
     }
 
-    private WebDriver getLocalChrome(){
+    private static WebDriver getLocalChrome(){
         log.info("Setting up new ChromeDriver");
-        System.setProperty("webdriver.chrome.driver", System.getProperty("driver.path") + "/chromedriver.exe");
-        return new ChromeDriver(CapabilityManager.getChromeOptions());
+        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
+        ChromeDriver chromeDriver = new ChromeDriver(CapabilityManager.getChromeOptions());
+        chromeDriver.manage().window().maximize();
+        return chromeDriver;
     }
-    private WebDriver getLocalFirefox(){
+    private static WebDriver getLocalFirefox(){
         //firefox requires not only browser to be installed but also profile to be created.
         log.info("Setting up new FirefoxDriver");
-        System.setProperty("webdriver.gecko.driver", System.getProperty("driver.path") + "/geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "drivers/geckodriver");
         return new FirefoxDriver(CapabilityManager.getFirefoxOptions());
     }
 
-    private WebDriver getLocalEdge(){
-        log.info("Setting up new EdgeDriver");
-        System.setProperty("webdriver.edge.driver", System.getProperty("driver.path") + "/msedgedriver.exe");
-        return new EdgeDriver(CapabilityManager.getEdgeOptions());
-    }
 
-    private WebDriver getRemoteDriver(Capabilities capabilities){
+    private static WebDriver getRemoteDriver(Capabilities capabilities){
         WebDriver requestedDriver = null;
         try{
             requestedDriver = new RemoteWebDriver(new URL(System.getProperty("selenium.grid.url")), capabilities);

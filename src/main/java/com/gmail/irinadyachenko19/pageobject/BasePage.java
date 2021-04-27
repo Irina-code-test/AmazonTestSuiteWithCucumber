@@ -3,23 +3,24 @@ package com.gmail.irinadyachenko19.pageobject;
 import com.gmail.irinadyachenko19.PropertyManager;
 import java.util.List;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.devtools.v89.page.Page;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-//import org.testng.Assert;
+
 
 public abstract class BasePage extends Page {
 
     protected WebDriver driver;
-    protected PropertyManager propertyManager;
+    protected PageManager pageManager;
 
-    public BasePage(WebDriver driver, PropertyManager propertyManager){
+    public BasePage(WebDriver driver,PageManager pageManager){
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
-        this.propertyManager = propertyManager;
+        this.pageManager = pageManager;
     }
 
     protected void selectFromDropdownByValue(WebElement element, String value, Logger logger){
@@ -42,6 +43,10 @@ public abstract class BasePage extends Page {
             logger.error("Option cannot be selected from dropdown");
             throw e;
         }
+    }
+
+    protected String getTextFromField(WebElement element){
+        return element.getText();
     }
 
 }
